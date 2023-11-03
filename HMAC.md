@@ -19,15 +19,20 @@ HMAC=$(openssl rand -hex 32)
 echo $HMAC > hmac_key.txt
 
 ## Create the Hash for the file/message
-### Old command
-Create the message authentication code hash.
+### Old command 
+Create the message authentication code hash. •note that the output of the old command is in lowercase, so you may need to convert it to uppercase. To convert to upper case you can use the 'tr' command. 
 ```sh
-openssl dgst -sha-256 -mac HMAC -macopt hexkey:$HMAC <filename>
+openssl dgst -<hash_algorith> -mac HMAC -macopt hexkey:$HMAC <filename>
+```
+
+•example•
+```sh
+openssl dgst -sha-256 -mac HMAC -macopt hexkey:$HMAC <filename> | tr '[:lower:]' '[:upper:]'
 ```
 
 ### New Command
 ```sh
-openssl mac -digest sha256 -macopt hexkey:$HMAC -in <filename> HMAC
+openssl mac -digest <hash_algorithm> -macopt hexkey:$HMAC -in <filename> HMAC
 ```
 *example*
 ```sh
@@ -37,7 +42,7 @@ openssl mac -digest sha256 -macopt hexkey:$HMAC -in myfile.txt HMAC
 ## Create the Hash for a message
 To create a HMAC for a text massage use the following command:
 ```sh
-echo -n '<message>' | openssl mac -digest SHA-256 -macopt hexkey:$HMAC -in - HMAC
+echo -n '<message>' | openssl mac -digest <hash_algorithm> -macopt hexkey:$HMAC -in - HMAC
 ```
 
 *example*
