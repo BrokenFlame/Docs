@@ -25,7 +25,7 @@ Create the message authentication code hash. •note that the output of the old 
 openssl dgst -<hash_algorith> -mac HMAC -macopt hexkey:$HMAC <filename>
 ```
 
-•example•
+*example*
 ```sh
 openssl dgst -sha-256 -mac HMAC -macopt hexkey:$HMAC <filename> | tr '[:lower:]' '[:upper:]'
 ```
