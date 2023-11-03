@@ -49,5 +49,5 @@ echo -n '<message>' | openssl mac -digest <hash_algorithm> -macopt hexkey:$HMAC 
 
 *example*
 ```sh
-echo -n 'Hello Kitty' | openssl mac -digest SHA-256 -macopt hexkey:$HMAC -in - HMAC
+echo -n 'Hello Kitty' | openssl mac -digest sha256 -macopt hexkey:$HMAC -in - HMAC
 ```
