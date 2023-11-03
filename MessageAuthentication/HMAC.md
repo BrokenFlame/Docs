@@ -1,4 +1,5 @@
 # Hash Message Authentication Code
+HMACs are useful for checking messages or file integrity where the key has been kept private.  For instance log messages written by a system to insecure storage can later be read back, along with the HMAC to confirm the integrity of the log messages. Due to the relatively low computational usage, HMAC are prefered in this senario over digital signatues.
 
 ## Select a hashing algorithm 
 Use the following command to list the hashing algorithms available.  It is recommended that you use sha256
