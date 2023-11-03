@@ -15,8 +15,10 @@ echo $HMAC > <hash_filename>
 ```
 
 *example*
+```sh
 HMAC=$(openssl rand -hex 32)
 echo $HMAC > hmac_key.txt
+```
 
 ## Create the Hash for the file/message
 ### Old command 
