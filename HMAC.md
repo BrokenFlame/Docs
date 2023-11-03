@@ -11,8 +11,12 @@ Create a random key for the Message Authentication Hash function.  This will be 
 
 ```sh
 HMAC=$(openssl rand -hex 32)
-echo $HMAC > hmac_key.txt
+echo $HMAC > <hash_filename>
 ```
+
+*example*
+HMAC=$(openssl rand -hex 32)
+echo $HMAC > hmac_key.txt
 
 ## Create the Hash for the file/message
 ### Old command
@@ -36,7 +40,7 @@ To create a HMAC for a text massage use the following command:
 echo -n '<message>' | openssl mac -digest SHA-256 -macopt hexkey:$HMAC -in - HMAC
 ```
 
-*exanple*
+*example*
 ```sh
 echo -n 'Hello Kitty' | openssl mac -digest SHA-256 -macopt hexkey:$HMAC -in - HMAC
 ```
