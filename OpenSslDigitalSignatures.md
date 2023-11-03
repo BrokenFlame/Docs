@@ -9,7 +9,7 @@ openssl ecparam -list_curves
 ## Generate Key Pair
 Generate a eliptical curve key pair, contained in a single file. 
 ```sh
-openssl genpkey -algorithm EC -keypopt ec_paramgen_curve: -out <keypair.pem> 
+openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:<ec_curve> -out  <keypair.pem> 
 ```
 
 ## Extract Public Key
