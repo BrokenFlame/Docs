@@ -13,7 +13,7 @@ HEX_SALT=$(openssl rand -hex 16)
 HEX_SALT > hex_salt.txt
 ```
 
-# Generate the key
+## Generate the key
 
 The following command is used to generate the key.
 ```sh
