@@ -8,6 +8,8 @@ tar -xf openssl-3.0.9.tar.gz
 cd openssl-3.0.9
 ./Configure enable-fips
 make install
+
+openssl fipsinstall
 ```
 
 Check OpenSSL Directory: 
