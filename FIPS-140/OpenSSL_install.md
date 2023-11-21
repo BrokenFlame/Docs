@@ -1,4 +1,4 @@
-# Install OpenSSl with FIPS enabled on MacOS
+# Install OpenSSl with FIPS enabled on MacOS and Linux
 
 Check OpenSSL Blog for latest versions with FIPS 140 validation. (https://www.openssl.org/blog/blog/2023/10/12/osslfips-timeline/)
 
