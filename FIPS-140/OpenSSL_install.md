@@ -29,6 +29,24 @@ sudo make install_fips
 ./util/wrap.pl -fips apps/openssl list -provider-path providers -provider fips -providers
 ```
 
+Force all applications to use FIPS Validated module by ensuring the file exist [/usr/local/ssl/fipsmodule.cnf] and the file [/usr/local/ssl/openssl.cnf] contains
+```sh
+config_diagnostics = 1
+openssl_conf = openssl_init
+
+.include /usr/local/ssl/fipsmodule.cnf
+
+[openssl_init]
+providers = provider_sect
+
+[provider_sect]
+fips = fips_sect
+base = base_sect
+
+[base_sect]
+activate = 1
+```
+
 Check OpenSSL Directory: 
 ```sh
 openssl version -d
