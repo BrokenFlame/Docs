@@ -19,6 +19,8 @@ mariadbd --help --verbose
 ...
 plugin_load_add = server_audit
 server_audit=FORCE_PLUS_PERMANENT
+server_audit_events = 'CONNECT, QUERY, TABLE, QUERY_DDL, QUERY_DML, QUERY_DCL, QUERY_DML_NO_SELECT'
+server_audit_output_type = SYSLOG
 ```
 ### Verify that the plugin has loaded
 Connect to the server and execute the following command
