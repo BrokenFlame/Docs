@@ -79,6 +79,13 @@ CREATE USER 'alice'@'%'
 
 ## Verification
 To verify that a session is encrypted execute the following command:
+
+```sql 
+SELECT VARIABLE_NAME, VARIABLE_VALUE
+FROM information_schema.global_variables
+WHERE VARIABLE_NAME = 'ssl_cipher';
+```
+Current session
 ```sql
-SHOW SESSION STATUS LIKE 'Ssl_cipher';
+SHOW SESSION STATUS LIKE 'ssl_cipher';
 ```
