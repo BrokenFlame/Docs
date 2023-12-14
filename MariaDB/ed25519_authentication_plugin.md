@@ -25,10 +25,13 @@ Disable the old password manager
 [mariadb]
 ...
 old_passwords=0
+secure_auth=ON
 ```
 
 ## Verification
 
 ```sh
 SHOW VARIABLES WHERE Variable_name = 'old_passwords';
+SHOW VARIABLES WHERE Variable_name = 'secure_auth';
+SHOW VARIABLES WHERE Variable_name = 'auth_ed25519';
 ```
