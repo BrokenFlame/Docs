@@ -85,6 +85,13 @@ SELECT VARIABLE_NAME, VARIABLE_VALUE
 FROM information_schema.global_variables
 WHERE VARIABLE_NAME = 'ssl_cipher';
 ```
+
+Get user ciphers
+```sql
+select ssl_type from mysql.user where user='<username>';
+```
+
+
 Current session
 ```sql
 SHOW SESSION STATUS LIKE 'ssl_cipher';
