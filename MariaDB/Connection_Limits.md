@@ -2,6 +2,7 @@
 
 ```sql
 SET GLOBAL max_user_connections=<desired numeric value>;
+SET GLOBAL max_connections=<desired numeric value>;
 ```
 
 ## Verification
