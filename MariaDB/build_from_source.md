@@ -1,5 +1,23 @@
 # Build MariaDB 10.3
 
+
+Enable Ubuntu Pro before starting
+
+Install Advantage Tools
+```sh
+sudo apt update
+sudo apt install ubuntu-advantage-tools
+sudo pro attach <your_pro_token>
+```
+
+Enable FIPS
+```sh
+sudo pro enable fips-updates
+sudo pro enable fips
+reboot
+```
+
+
 Install the Ubuntu build tools
 ```sh
 sudo apt-get install software-properties-common devscripts equivs
