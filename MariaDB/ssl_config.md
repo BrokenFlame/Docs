@@ -91,6 +91,12 @@ Get user ciphers
 select ssl_type from mysql.user where user='<username>';
 ```
 
+List all remote users
+```sh
+SELECT user, host, ssl_type FROM mysql.user
+WHERE NOT HOST IN ('::1', '127.0.0.1', 'localhost');
+```
+
 
 Current session
 ```sql
