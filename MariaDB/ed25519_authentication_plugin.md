@@ -18,3 +18,17 @@ mariadbd --help --verbose
 ...
 plugin_load_add = auth_ed25519
 ```
+
+### Disable old password
+Disable the old password manager
+```sh
+[mariadb]
+...
+old_passwords=0
+```
+
+## Verification
+
+```sh
+SHOW VARIABLES WHERE Variable_name = 'old_passwords';
+```
