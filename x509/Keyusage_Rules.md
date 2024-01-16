@@ -155,3 +155,39 @@ subjectAltName          = @alt_vpn_client
 **Critical** flag specifies whether the information in an extension is important. If an application doesn't recognize the extension marked as "**critical**", the certificate cannot be accepted. If an extension is not marked as critical (critical value False) it can be ignored by an application.
 
 In Windows, critical extensions are marked with a yellow exclamation mark in the certificates property dialog.
+
+## RFC 5280 [4.2.1.12]
+
+anyExtendedKeyUsage  OBJECT IDENTIFIER ::= { id-ce-extKeyUsage 0 }
+
+id-kp  OBJECT IDENTIFIER ::= { id-pkix 3 }
+
+id-kp-serverAuth OBJECT IDENTIFIER ::= { id-kp 1 }
+TLS server authentication
+KU bits for:
+digitalSignature, keyEncipherment or keyAgreement
+
+id-kp-clientAuth OBJECT IDENTIFIER ::= { id-kp 2 }
+TLS client authentication
+KU bits for:
+digitalSignature and/or keyAgreement
+
+id-kp-codeSigning  OBJECT IDENTIFIER ::= { id-kp 3 }
+Signing of downloadable executable code
+KU bits for:
+digitalSignature
+
+id-kp-emailProtection  OBJECT IDENTIFIER ::= { id-kp 4 }
+Email protection
+KU bits for:
+digitalSignature, nonRepudiation, and/or keyEncipherment or keyAgreement
+
+id-kp-timeStamping OBJECT IDENTIFIER ::= { id-kp 8 }
+Binding the hash of an object to a time
+KU bits for:
+digitalSignature and/or nonRepudiation
+
+id-kp-OCSPSigning  OBJECT IDENTIFIER ::= { id-kp 9 }
+Signing OCSP responses
+KU bits for:
+digitalSignature and/or nonRepudiation
