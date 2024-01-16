@@ -151,3 +151,7 @@ keyUsage                = critical, nonRepudiation, digitalSignature, keyEnciphe
 extendedKeyUsage        = critical, clientAuth
 subjectAltName          = @alt_vpn_client
 ```
+## Additional Notes
+**Critical** flag specifies whether the information in an extension is important. If an application doesn't recognize the extension marked as "**critical**", the certificate cannot be accepted. If an extension is not marked as critical (critical value False) it can be ignored by an application.
+
+In Windows, critical extensions are marked with a yellow exclamation mark in the certificates property dialog.
