@@ -11,9 +11,9 @@ cd openssl-3.0.9
 make
 
 # Test FIP Validated modules using Regular OpenSSL
-wget https://www.openssl.org/source/openssl-3.1.4.tar.gz
-tar -xf openssl-3.1.4.tar.gz
-cd openssl-3.1.4
+wget https://www.openssl.org/source/openssl-3.2.1.tar.gz
+tar -xf openssl-3.2.1.tar.gz
+cd openssl-3.2.1
 ./Configure enable-fips
 make
 cp ../openssl-3.0.9/providers/fips.so providers/.
