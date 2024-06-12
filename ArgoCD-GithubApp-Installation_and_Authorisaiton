@@ -1,0 +1,78 @@
+# Using GitHub Apps to allow ArgoCD to access GitHub Repos
+
+1. Create the GitHub App 
+
+
+2. Creat an empty file
+```sh
+touch encodeJwt.sh
+```
+3. Add the following content to the file:
+```sh
+#!/usr/bin/env bash
+
+set -o pipefail
+
+client_id=$1 # Client ID as first argument
+
+pem=$( cat $2 ) # file path of the private key as second argument
+
+now=$(date +%s)
+iat=$((${now} - 60)) # Issues 60 seconds in the past
+exp=$((${now} + 600)) # Expires 10 minutes in the future
+
+b64enc() { openssl base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n'; }
+
+header_json='{
+    "typ":"JWT",
+    "alg":"RS256"
+}'
+# Header encode
+header=$( echo -n "${header_json}" | b64enc )
+
+payload_json='{
+    "iat":'"${iat}"',
+    "exp":'"${exp}"',
+    "iss":'"${client_id}"'
+}'
+# Payload encode
+payload=$( echo -n "${payload_json}" | b64enc )
+
+# Signature
+header_payload="${header}"."${payload}"
+signature=$(
+    openssl dgst -sha256 -sign <(echo -n "${pem}") \
+    <(echo -n "${header_payload}") | b64enc
+)
+
+# Create JWT
+JWT="${header_payload}"."${signature}"
+printf '%s\n' "JWT: $JWT"
+```
+4. Mark the file as an executable
+```sh
+chmod +x encodeJwt.sh
+```
+
+5. Execute the file providing the Application ID and the localtion of the Pem file
+```sh
+./encodeJwt.sh <GitHub App ID> <GitHub App Private Key location>
+```
+You should now recieve a JWT, you can disgard the "JWT" prefix along with the space at the begining of the token. Copy the rest of the token to a safe place for future use.
+
+
+6. Ensure you can find your GitHub App in the list, using your GitHub App ID.
+```sh
+curl -L  -H "Accept: application/vnd.github+json"  -H "Authorization: Bearer <JWT_TOKEN>" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/app
+```
+
+
+7. Get the installation ID 
+```sh
+argocdstaging_githubapp Tr.Thambi$ curl -L  -H "Accept: application/vnd.github+json"  -H "Authorization: Bearer <JWT_TOKEN>" -H "X-GitHub-Api-Version: 2022-11-28" https://api.github.com/app/installations
+```
+
+8. Authorise the Github Application, by executing the following curl command replacing the JWT_Token and the Installation_Id
+```sh
+curl --request POST --url "https://api.github.com/app/installations/<Installation_ID>/access_tokens" --header "Accept: application/vnd.github+json" --header "Authorization: <JWT_TOKEN>" --header "X-GitHub-Api-Version: 2022-11-28"
+```
