@@ -1,5 +1,6 @@
-Install Kiali for Google using Istio Ingress:
+#Install Kiali for Google using Istio Ingress:
 
+Create and apply the following network configuration
 ```sh
 apiVersion: networking.istio.io/v1
 kind: Gateway
