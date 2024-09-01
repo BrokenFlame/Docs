@@ -1,6 +1,7 @@
-#Install Kiali for Google using Istio Ingress:
+# Install Kiali for Google using Istio Ingress:
 
-Create and apply the following network configuration
+Create and apply the following network configuration remembering to update the OIDC secret and the domain name.
+
 ```sh
 apiVersion: networking.istio.io/v1
 kind: Gateway
@@ -66,7 +67,7 @@ data:
 EOF
 ```
 
-Create file for Helm Values called helm-values-kiali-operator.yaml
+Create file for Helm Values called helm-values-kiali-operator.yaml remember to update the client id.
 ```txt
 cr:
   create: true
