@@ -43,7 +43,7 @@ SELECT * FROM pg_catalog.pg_tables;
 \c <database_name>
 ```
 
-### Exit psq
+### Exit psql
 ```sh
 \q 
 ```
