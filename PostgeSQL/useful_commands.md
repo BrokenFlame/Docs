@@ -1,11 +1,11 @@
 # Useful Postgres command (PSQL)
 
-###Output results as CSV
+### Output results as CSV
 ```sql
 \copy (SELECT * FROM <database_name>.<table>') To '/tmp/test.csv' With CSV DELIMITER ',' HEADER;
 ```
 
-###Get table sizes
+### Get table sizes
 ```sql
 select 
   table_schema, 
@@ -15,7 +15,7 @@ from information_schema.tables
 order by 3;
 ```
 
-###Get Database size
+### Get Database size
 ```
 \l+
 ```
@@ -24,7 +24,7 @@ or
 SELECT pg_size_pretty(pg_database_size('Database Name'));
 ```
 
-###List Databases
+### List Databases
 ```
 \l
 ```
@@ -38,12 +38,12 @@ SELECT * FROM pg_catalog.pg_tables;
 dt
 ```
 
-###Change Database
+### Change Database
 ```sh
 \c <database_name>
 ```
 
-###Exit psq
+### Exit psq
 ```sh
 \q 
 ```
