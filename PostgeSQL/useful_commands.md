@@ -29,11 +29,11 @@ SELECT pg_size_pretty(pg_database_size('Database Name'));
 \l
 ```
 or
-```
+```sql
 SELECT * FROM pg_catalog.pg_tables;
 ```
 
-###List Tables
+### List Tables
 ```
 dt
 ```
