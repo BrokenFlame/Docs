@@ -16,7 +16,7 @@ order by 3;
 ```
 
 ### Get Database size
-```
+```sql
 \l+
 ```
 or
@@ -25,7 +25,7 @@ SELECT pg_size_pretty(pg_database_size('Database Name'));
 ```
 
 ### List Databases
-```
+```sql
 \l
 ```
 or
@@ -34,8 +34,8 @@ SELECT * FROM pg_catalog.pg_tables;
 ```
 
 ### List Tables
-```
-dt
+```sql
+\dt
 ```
 
 ### Change Database
