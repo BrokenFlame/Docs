@@ -20,3 +20,7 @@ Create RSA Private Key
 openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:2048
 ```
 
+Create CSR from config
+```sh
+openssl req -new -config <configFile> -key <privateKey> -out servers.csr
+```
