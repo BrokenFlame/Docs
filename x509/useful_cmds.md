@@ -5,6 +5,11 @@ Display hosted certificate details
 echo | openssl s_client -connect <fqdn>:<port> -showcerts
 ```
 
+Read server certificate for SNI
+```
+openssl s_client -showcerts -servername <SNI>  -connect <Server Address>:443 </dev/null
+```
+
 Open mTLS connect with client certificate
 
 ```sh
