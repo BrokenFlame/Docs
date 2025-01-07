@@ -25,6 +25,29 @@ Create RSA Private Key
 openssl genpkey -algorithm rsa -pkeyopt rsa_keygen_bits:2048
 ```
 
+Generic Config file:
+```sh
+[req]
+default_bits        = 2048
+prompt              = no
+default_md          = SHA256
+distinguished_name  = distinguished_name_client_cert
+req_extensions      = req_ext
+
+[distinguished_name_client_cert]
+countryName         = GB
+stateOrProvinceName = London
+localityName        = London
+organizationName    = Company Name
+commonName          = www.mycompany.com
+emailAddress        = me@mycompany.com
+
+[req_ext]
+basicConstraints    = CA:FALSE
+keyUsage            = critical, nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage    = critical, serverAuth, clientAuth
+```
+
 Create CSR from config
 ```sh
 openssl req -new -config <configFile> -key <privateKey> -out servers.csr
