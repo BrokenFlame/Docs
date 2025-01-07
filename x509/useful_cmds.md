@@ -29,3 +29,17 @@ Create CSR from config
 ```sh
 openssl req -new -config <configFile> -key <privateKey> -out servers.csr
 ```
+
+Convert CER to PFX (PKCS12)
+```sh
+openssl pkcs12 -export -in ServerCertificate.crt -certfile CABundle.crt -inkey private-key.pem -out certificate.pfx
+```
+
+Get Certificate Fingerprint
+```sh
+openssl x509 -noout -fingerprint -sha256 -inform pem -in ServerCertificate.crt 
+```
+or 
+```sh
+openssl x509 -noout -fingerprint -sha1 -inform pem -in ServerCertificate.crt 
+```
