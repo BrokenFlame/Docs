@@ -66,3 +66,8 @@ or
 ```sh
 openssl x509 -noout -fingerprint -sha1 -inform pem -in ServerCertificate.crt 
 ```
+
+Get PFX cert information
+```sh
+openssl pkcs12 -in example.pfx -passin pass:your_password -info
+```
