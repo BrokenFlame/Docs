@@ -1,0 +1,52 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: example-cert
+  namespace: default
+spec:
+  secretTemplate:
+    annotations:
+      cert-manager.io/issue-temporary-certificate: "false"
+      acme.cert-manager.io/http01-edit-in-place: "false"
+    labels:
+      certificateResourceUsed: "true"
+  secretName: "example-cert-sectret"
+  privateKey:
+    rotationPolicy: Always
+    algorithm: RSA
+    encoding: PEM
+    size: 2048
+  additionalOutputFormats:
+  - type: CombinedPEM
+  - type: PEM
+  - type: DER
+# keystores:
+#   pkcs12:
+#     create: true
+#     passwordSecretRef:
+#       name: example-com-tls-keystore
+#       key: password
+#     profile: Modern2023
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  subject:
+    organizations:
+      - example-organisation
+  commonName: "example.com"
+  dnsNames:
+  - example.com
+  - www.example.com
+  otherNames: {}
+  # Should only supply oid of ut8 valued types
+  # - oid: 1.3.6.1.4.1.311.20.2.3 # User Principal Name "OID"
+  #   utf8Value: upn@example.local
+  usages:
+    - server auth
+    - client auth
+    - digital signature
+    - key encipherment
+  isCA: false
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+    group: cert-manager.io #use cert-mamager
