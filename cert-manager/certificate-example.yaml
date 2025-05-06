@@ -30,8 +30,18 @@ spec:
   duration: 2160h # 90d
   renewBefore: 360h # 15d
   subject:
+    countries: 
+      - UK
+    localities:
+      - London
+    organizationalUnits: []
     organizations:
       - example-organisation
+    postalCodes:
+      - N1 1AA
+    provinces: []
+    streetAddresses:
+      - 1 Company Road
   commonName: "example.com"
   dnsNames:
   - example.com
