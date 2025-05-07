@@ -81,3 +81,8 @@ Get start and end date for certificate on live server
 ```sh
 openssl s_client -servername <FQDN> -connect <FQDN>:<port> | openssl x509 -noout -dates
 ```
+
+Get end date for certificate on live server
+```sh
+openssl s_client -servername <FQDN> -connect <FQDN>:<port> | openssl x509 -noout -enddate
+```
