@@ -76,3 +76,8 @@ Get PFX cert information
 ```sh
 openssl pkcs12 -in example.pfx -passin pass:your_password -info
 ```
+
+Get start and end date for certificate on live server
+```sh
+openssl s_client -servername <FQDN> -connect <FQDN>:<port> | openssl x509 -noout -dates
+```
