@@ -86,3 +86,8 @@ Get end date for certificate on live server
 ```sh
 openssl s_client -servername <FQDN> -connect <FQDN>:<port> | openssl x509 -noout -enddate
 ```
+
+Check is SSL Certificate will expire in 1 day. Adjust TIMEINSECONDS from now to check if the certificate will expire within the duration. 1 day is equal to 86400 seconds. 2 Weeks is equal to 1209600 seconds.
+```sh
+openssl s_client -showcerts -connect <FQND>:443 -servername <FQND> </dev/null 2>/dev/null |openssl x509 -checkend <TIMEINSECONDS> 
+```
