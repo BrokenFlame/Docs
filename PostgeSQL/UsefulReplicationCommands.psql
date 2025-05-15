@@ -1,0 +1,65 @@
+Check table for Replication Identity
+```sql
+SELECT CASE relreplident
+          WHEN 'd' THEN 'default'
+          WHEN 'n' THEN 'nothing'
+          WHEN 'f' THEN 'full'
+          WHEN 'i' THEN 'index'
+       END AS replica_identity
+FROM pg_class
+WHERE oid = 'mytablename'::regclass;
+```
+
+Check Replication Identity on every table in a Schema
+```sql
+SELECT 
+table_name, 
+oid,
+CASE relreplident
+    WHEN 'd' THEN 'default'
+    WHEN 'n' THEN 'nothing'
+    WHEN 'f' THEN 'full'
+    WHEN 'i' THEN 'index'
+END AS replica_identity
+FROM pg_class JOIN information_schema.tables t
+ON oid = CONCAT('"',table_name,'"')::regclass
+WHERE table_schema = '<your_schema>' 
+```
+
+Get all Replication Identity for all Tables
+```sql
+WITH tables_no_pkey AS (
+    SELECT tbl.table_schema, tbl.table_name
+    FROM information_schema.tables tbl
+    WHERE table_type = 'BASE TABLE'
+        AND table_schema not in ('pg_catalog', 'information_schema')
+        AND NOT EXISTS (
+            SELECT 1 
+            FROM information_schema.key_column_usage kcu
+            WHERE kcu.table_name = tbl.table_name 
+                AND kcu.table_schema = tbl.table_schema
+        )
+)
+SELECT oid::regclass FROM tables_no_pkey INNER JOIN pg_class ON oid::regclass = table_name::regclass
+WHERE relreplident = 'd';
+-- d = default
+```
+
+Set Replication Idenity to Default
+```sql
+ALTER TABLE your_table_name REPLICA IDENTITY DEFAULT;
+```
+
+Set Replication Idenity to Full
+```
+ALTER TABLE your_table SET REPLICA IDENTITY FULL;
+```
+
+Remove Replication Idenity
+```sql
+ALTER TABLE your_table_name REPLICA IDENTITY NOTHING;
+```
+
+Set Replication Identity to Index
+```sql
+```
