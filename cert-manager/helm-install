@@ -1,0 +1,1 @@
+helm upgrade cert-manager -n cert-manager --set  "crds.enabled=true" --set "serviceAccount.annotations.eks\.amazonaws\.com/role-arn=arn:aws:iam::[accountNumber]:role/k8s-cert-manager" cert-manager
