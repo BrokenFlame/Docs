@@ -1,0 +1,19 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Cert-Manager",
+            "Effect": "Allow",
+            "Principal": {
+                "Federated": "arn:aws:iam::[AccountID]:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/[EKS-OIDC-ID]"
+            },
+            "Action": "sts:AssumeRoleWithWebIdentity",
+            "Condition": {
+                "StringEquals": {
+                    "oidc.eks.eu-west-2.amazonaws.com/id/[EKS-OIDC-ID]:sub": "system:serviceaccount:cert-manager:cert-manager",
+                    "oidc.eks.eu-west-2.amazonaws.com/id/[EKS-OIDC-ID]:aud": "sts.amazonaws.com"
+                }
+            }
+        }
+    ]
+}
