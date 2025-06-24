@@ -91,3 +91,8 @@ Check is SSL Certificate will expire in 1 day. Adjust TIMEINSECONDS from now to 
 ```sh
 openssl s_client -showcerts -connect <FQND>:443 -servername <FQND> </dev/null 2>/dev/null |openssl x509 -checkend <TIMEINSECONDS> 
 ```
+
+Decrypt RSA Private Key
+```sh
+openssl rsa -in encrypted_PrivateKey.pem -out PrivateKey.pem
+```
