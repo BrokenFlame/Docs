@@ -30,6 +30,8 @@ spec:
   meshConfig:
     outboundTrafficPolicy:
       mode: ALLOW_ANY
+    meshMTLS:
+      minProtocolVersion: TLSV1_3
   values:
     gateways:
       istio-ingressgateway:
