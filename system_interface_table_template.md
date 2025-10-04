@@ -12,10 +12,13 @@ Below is a System Inferace table template
 | Target System | The system that informatin flows to                                                     |
 | Description   | A description of the purpose of the interface                                           |
 | Frequency     | How often the information needs to be passed ( Real-time), once per day, monthly, etc ) |
+| Volume        | Total units in a specific time span                                                     |
+| Security      | TLS is required to protect PII data under GDPR                                          |
+| Error Handling | System Flow 14.6                                                                       |
 ### Interface Objects                                                                                                                                                                              
-| Object           | Field                | Data Dictionary ID                                            | Validation Rules |
-| ---------------- | -------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Business Object  | Field within Object  | Reference to Data Dictionary that defines the business object | Specific rules on validating data, leave blank if the Data Dictionary buisness rules suffice |
+| Object           | Field                | Data Dictionary ID                                            | Validation Rules | Data Security Category |
+| ---------------- | -------------------- | ------------------------------------------------------------- | ---------------- |----------------------- |
+| Business Object  | Field within Object  | Reference to Data Dictionary that defines the business object | Specific rules on validating data, leave blank if the Data Dictionary buisness rules suffice | The category of data (usually Public, Internal Confidential, or Restricted, however other category labels may be relevant such as Personal Identifiable Data, Sensitive Personal Data, Cardholder Data, Sensitive Auth Data, Breach & Consent Data, Encryption & Key Data ) 
 
 
 Please see below for a completed example.
@@ -31,6 +34,8 @@ Please see below for a completed example.
 | Target System | Purchase Ledge                                                                          |
 | Description   | The business wants the purchase ledger to be updated as soon as orders are places       |
 | Frequency     | Real-time                                                                               |
+| Security      | Reference any security or privacy requirements                                          |
+| Error Handling | Reference to a System Flow to describe how errors are handled                          |
 ### Interface Objects                                                                                                                                                                              
 | Object           | Field                  | Data Dictionary ID  | Validation Rules | Data Security Category |
 | ---------------- | ---------------------- | ------------------- | ---------------- | ---------------------- |
