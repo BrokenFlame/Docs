@@ -5,8 +5,8 @@ It provides a high level information for analyst, governance and security teams 
 
 Below is a System Inferace table template
 
-| |System Interface |
-| ----------------- |
+| System Interface |                                                                                      |
+| ------------- | --------------------------------------------------------------------------------------- | 
 | ID            | Document ID                                                                             |
 | Source System | The system the information flows from                                                   |
 | Target System | The system that informatin flows to                                                     |
