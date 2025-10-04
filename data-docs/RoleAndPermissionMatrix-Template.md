@@ -1,4 +1,4 @@
-# Roles and Permissions Matrix for Requirements
+# Roles and Permissions Matrix
 
 Below is a basic template to take requirements roles and permissions. This matrix is useful for building groups permissions and understanding system requirements during the design phase.
 
