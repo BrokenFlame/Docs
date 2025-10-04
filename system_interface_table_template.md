@@ -19,6 +19,9 @@ Below is a System Inferace table template
 
 
 Please see below for a completed example.
+---
+
+<p>
 
 | System Interface |                                                                                      |
 | ------------- | --------------------------------------------------------------------------------------- | 
