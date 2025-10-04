@@ -1,4 +1,4 @@
-# Instruction to Obtain Access to the SFTP Service
+# Instruction to Obtain Access to the company SFTP Service
 
 ## Background
 
@@ -6,9 +6,9 @@ SFTP, stands for Secure File Transfer Protocol.  It is a network protocol that p
 
 ## Introduction
 
-Dekopay provides an SFTP service for merchants and partners to transfer data securly to and from Dekopay.  Dekopay's SFTP service is built on top of AWS File Transfer service, ensuring that the service is highly avilalbe, and secure. 
+The company provides an SFTP service for merchants and partners to transfer data securly to and from the company.  The company's SFTP service is built on top of AWS File Transfer service, ensuring that the service is highly avilalbe, and secure. 
 
-To gain access to Deko's SFTP service, you are required to contact Dekopay providing the following information:
+To gain access to the company's SFTP service, you are required to contact the company providing the following information:
 
 1. Your company or organisation name.
 2. The reason or purpose to access the SFTP service.
@@ -16,7 +16,7 @@ To gain access to Deko's SFTP service, you are required to contact Dekopay provi
 4. If any automated services will be used to access the SFTP service.
 5. The public SSH Keys assoicated with the private SSH keys for each user or service account to is to access the SFTP site.
 
-If you have a public SSH key already, you may simply send the public key to your Dekopay contact, along with the details above.  Your account will then be configured and you will be able to access the SFTP at sftp.dekopay.com using your username and private ssh key. It is recommended that you use an SFTP client such as CyberDuck, Filezilla, or CuteFTP, however more advance command line alternatives are avilable. 
+If you have a public SSH key already, you may simply send the public key to your company contact, along with the details above.  Your account will then be configured and you will be able to access the SFTP at sftp.<company_name>.com using your username and private ssh key. It is recommended that you use an SFTP client such as CyberDuck, Filezilla, or CuteFTP, however more advance command line alternatives are avilable. 
 
 
 
@@ -42,7 +42,7 @@ cd %HOMEDRIVE%%HOMEPATH%/.ssh
 3. To create a new SSH Keypair on Windows 11, MacOS or Linux you may use the following command in a terminal windows, remembering to replace **myemail@address.here** with the email address of the user or service account.  If you wish to add a passphrase to the SSH Key, please add the passphrase between the double quotation marks at the end of the command.
 
 ```sh
-ssh-keygen -t rsa -b 2048 -C myemail@ddress.here -f dekopay-sftp -q -N ""
+ssh-keygen -t rsa -b 2048 -C myemail@ddress.here -f <company-name>-sftp -q -N ""
 ```
 
 4. Now navigate to the location where the ssh keys have been stored.
