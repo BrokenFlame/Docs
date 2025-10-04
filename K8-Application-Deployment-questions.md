@@ -17,8 +17,14 @@ Please complete the following to provide key information regarding the applicati
 5. Is the application a server, client or P2P application?
 6. Is it expected that the application will have more than one instance running at a time?
 7. Is it expected one and only one instance will run on each kubernetes nodes, as a DeamonSet?
+8. Does the application need to share a key or session state with other instances of itself _(this is usually required for stateful applications)_?
 
 _Please note that the application will be terminated and restarted if it exceeds the upper RAM limited specified above._
+
+#### Application Health
+1. Does the application have a health check endpoint, and if so please state the enpoint?
+2. How often should the health check endpoint be called (interval in seconds between health check calls)?
+3. How many failed health check calls should initalise the termination of the application container?
 
 ### Network Connectivity 
 
