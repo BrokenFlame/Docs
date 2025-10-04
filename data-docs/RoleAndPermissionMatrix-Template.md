@@ -1,6 +1,6 @@
 # Roles and Permissions Matrix
 
-| System                 | Sales | Technical Support | System Administrator | Security | Customers |
+|                        | Sales | Technical Support | System Administrator | Security | Customers |
 | ---------------------- | ----- | ----------------- | -------------------- | -------- | ----------|
 | **Systeom Opertation** |       |                   |                      |          |           |
 | Setup Staff Member     |       |                   |           X          |          |           |
