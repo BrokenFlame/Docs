@@ -5,12 +5,25 @@ It provides a high level information for analyst, governance and security teams 
 
 Below is a System Inferace table template
 
-### System Interface
+| |System Interface |
+| ----------------- |
+| ID            | Document ID                                                                             |
+| Source System | The system the information flows from                                                   |
+| Target System | The system that informatin flows to                                                     |
+| Description   | A description of the purpose of the interface                                           |
+| Frequency     | How often the information needs to be passed ( Real-time), once per day, monthly, etc ) |
+### Interface Objects                                                                                                                                                                              
+| Object           | Field                | Data Dictionary ID                                            | Validation Rules |
+| ---------------- | -------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| Business Object  | Field within Object  | Reference to Data Dictionary that defines the business object | Specific rules on validating data, leave blank if the Data Dictionary buisness rules suffice |
 
 
+Please see below for a completed example.
+
+## System Interface
 | ID            | Document ID                                                                             |
 | ------------- | --------------------------------------------------------------------------------------- | 
-| Source System | The system the information flows from                                                   |
+| Source System | Order Entry System                                                                      |
 | Target System | The system that informatin flows to                                                     |
 | Description   | A description of the purpose of the interface                                           |
 | Frequency     | How often the information needs to be passed ( Real-time), once per day, monthly, etc ) |
