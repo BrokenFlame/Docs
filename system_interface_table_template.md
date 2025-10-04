@@ -32,8 +32,8 @@ Please see below for a completed example.
 | Description   | The business wants the purchase ledger to be updated as soon as orders are places       |
 | Frequency     | Real-time                                                                               |
 ### Interface Objects                                                                                                                                                                              
-| Object           | Field                | Data Dictionary ID                                            | Validation Rules |
-| ---------------- | -------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Order            | All fields  | DD03                                                          |                                                                                              |
-| Customer         | Customer Id | DD001                                                         |                                                                                              |
-| Rate Card        | Discount    | DD002                                                         | Discount must be between 1 and 100% of retail value, it cannot be negative or exceed 100%    |
+| Object           | Field                  | Data Dictionary ID  | Validation Rules | Data Security Category |
+| ---------------- | ---------------------- | ------------------- | ---------------- | ---------------------- |
+| Order            | All fields             | DD03                |                  | Confidential           |
+| Customer         | Customer email address | DD001               |                  | PII                    |
+| Rate Card        | Discount               | DD002               | Discount must be between 1 and 100% of retail value, it cannot be negative or exceed 100% | Internal |
