@@ -1,4 +1,4 @@
-# Instruction to Obtain Access to Dekopay's SFTP Service
+# Instruction to Obtain Access to the SFTP Service
 
 ## Background
 
