@@ -27,6 +27,17 @@ _Please note that the application will be terminated and restarted if it exceeds
 2. How often should the health check endpoint be called (interval in seconds between health check calls)?
 3. How many failed health check calls should initalise the termination of the application container?
 
+##### Storage
+1. Does the application require file or block storage?
+2. If the application requires file or block storage, how much storage will be required for the first year of operation?
+3. Is there autoamatic storage usage management built into the application?
+4. Is there a requirement for the storage to be persistent? 
+5. Is there a requirement to share the storage between mutiple instances of the application?
+
+#### Container Security
+1. Does the application run under the root context?
+2. Which user ID does the application run under?
+
 ### Network Connectivity 
 
 #### Internet connected application
@@ -48,13 +59,6 @@ _Please note that the application will be terminated and restarted if it exceeds
 2. If the application has a Database backend, which database engine does it use?
 
 **Please note that all database connections are encrypted in transport, your application must support TLS encryption for the database connections**
-
-##### Storage
-1. Does the application require file or block storage?
-2. If the application requires file or block storage, how much storage will be required for the first year of operation?
-3. Is there autoamatic storage usage management built into the application?
-4. Is there a requirement for the storage to be persistent? 
-5. Is there a requirement to share the storage between mutiple instances of the application?
 
 
 ## Application Configuration
