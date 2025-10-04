@@ -18,6 +18,7 @@ Please complete the following to provide key information regarding the applicati
 6. Is it expected that the application will have more than one instance running at a time?
 7. Is it expected one and only one instance will run on each kubernetes nodes, as a DeamonSet?
 8. Does the application need to share a key or session state with other instances of itself _(this is usually required for stateful applications)_?
+9. What is the best way to scale the applications performance (Virtical or horizontal scaling)?
 
 _Please note that the application will be terminated and restarted if it exceeds the upper RAM limited specified above._
 
