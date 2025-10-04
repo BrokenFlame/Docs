@@ -11,5 +11,6 @@ Below is a small table that shows the status of the Data Permission Rows
 
 | Status         | Description                                   |
 | -------------- | --------------------------------------------- |
+| Draft          | Draft Entry                                   |
 | Pending Review | Awaiting Review                               |
 | Reviewed       | Reviewed by and accepted by all stake holders |
