@@ -20,14 +20,16 @@ Below is a System Inferace table template
 
 Please see below for a completed example.
 
-## System Interface
-| ID            | Document ID                                                                             |
+| System Interface |                                                                                      |
 | ------------- | --------------------------------------------------------------------------------------- | 
+| ID            | 00001                                                                                   |
 | Source System | Order Entry System                                                                      |
-| Target System | The system that informatin flows to                                                     |
-| Description   | A description of the purpose of the interface                                           |
-| Frequency     | How often the information needs to be passed ( Real-time), once per day, monthly, etc ) |
+| Target System | Purchase Ledge                                                                          |
+| Description   | The business wants the purchase ledger to be updated as soon as orders are places       |
+| Frequency     | Real-time                                                                               |
 ### Interface Objects                                                                                                                                                                              
 | Object           | Field                | Data Dictionary ID                                            | Validation Rules |
 | ---------------- | -------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
-| Business Object  | Field within Object  | Reference to Data Dictionary that defines the business object | Specific rules on validating data, leave blank if the Data Dictionary buisness rules suffice |
+| Order            | All fields  | DD03                                                          |                                                                                              |
+| Customer         | Customer Id | DD001                                                         |                                                                                              |
+| Rate Card        | Discount    | DD002                                                         | Discount must be between 1 and 100% of retail value, it cannot be negative or exceed 100%    |
