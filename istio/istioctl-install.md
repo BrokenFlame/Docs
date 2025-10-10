@@ -42,3 +42,106 @@ EOF
 ```sh
 istioctl install --set profile=default  -f override.yaml
 ```
+
+Egress gateway if not created already
+```sh
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: egress-gateway
+  namespace: istio-egress
+spec:
+  selector:
+    istio: egressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+  - port:
+      number: 443
+      name: https
+      protocol: TLS
+    hosts:
+    - "*"
+    tls:
+      mode: PASSTHROUGH
+```
+
+
+```sh
+cat > PeerAuthentication.yaml<<EOF
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: defaultPeerAuthentication
+  namespace: default
+spec:
+  mtls:
+    mode: STRICT  # or PERMISSIVE or DISABLE
+EOF
+
+kubectl apply -f PeerAuthentication.yaml
+```
+
+Catch all egress for HTTP and HTTPS
+```sh
+cat > egressRules.yaml<<EOF
+apiVersion: networking.istio.io/v1beta1
+kind: ServiceEntry
+metadata:
+  name: allow-all-external
+spec:
+  hosts:
+  - "*"
+  location: MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  - number: 443
+    name: https
+    protocol: TLS
+  resolution: NONE
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: redirect-external-through-egress
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - mesh  # Apply to internal traffic
+  - istio-egressgateway  # Optional: allow routing at egress too
+  tcp:
+  - match:
+    - port: 443
+    route:
+    - destination:
+        host: istio-egressgateway.istio-egress.svc.cluster.local
+        port:
+          number: 443
+  - match:
+    - port: 80
+    route:
+    - destination:
+        host: istio-egressgateway.istio-egress.svc.cluster.local
+        port:
+          number: 80
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: egressgateway-for-external
+spec:
+  host: istio-egressgateway.istio-egress.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: PASSTHROUGH
+EOF
+
+kubectl apply -f egressRules.yaml
+```
