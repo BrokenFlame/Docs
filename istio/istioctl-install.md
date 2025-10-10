@@ -43,8 +43,12 @@ EOF
 istioctl install --set profile=default  -f override.yaml
 ```
 
-Egress gateway if not created already
+
+
+Below is only to get metrics and service mapping to work in Kiali or to force egress via the egressgateway.
+
 ```sh
+cat > egress-gateway.yaml<<EOF
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
@@ -68,10 +72,26 @@ spec:
     - "*"
     tls:
       mode: PASSTHROUGH
-```
+  - port:
+      number: 22
+      name: ssh
+      protocol: TCP
+    hosts:
+    - "*"
+  - port:
+      number: 21
+      name: ftp
+      protocol: TCP
+    hosts:
+    - "*"
+  - port:
+      number: 25
+      name: smtp
+      protocol: TCP
+    hosts:
+    - "*"
+EOF
 
-
-```sh
 cat > PeerAuthentication.yaml<<EOF
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
@@ -131,6 +151,27 @@ spec:
         host: istio-egressgateway.istio-egress.svc.cluster.local
         port:
           number: 80
+  - match:
+    - port: 22   # SSH
+    route:
+    - destination:
+        host: istio-egressgateway.istio-egress.svc.cluster.local
+        port:
+          number: 22
+  - match:
+    - port: 21   # FTP
+    route:
+    - destination:
+        host: istio-egressgateway.istio-egress.svc.cluster.local
+        port:
+          number: 21
+  - match:
+    - port: 25   # SMTP
+    route:
+    - destination:
+        host: istio-egressgateway.istio-egress.svc.cluster.local
+        port:
+          number: 25
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
