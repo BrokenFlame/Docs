@@ -1,6 +1,18 @@
 Configure Istio Default Gateway to use NLB and allow egress
 
 ```sh
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: istio-ingress
+  name: istio-ingress
+---
+kind: Namespace
+metadata:
+  labels:
+    kubernetes.io/metadata.name: istio-egress
+  name: istio-egress
+---
 cat > override.yaml<<EOF
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
@@ -37,6 +49,15 @@ spec:
     gateways:
       istio-ingressgateway:
         injectionTemplate: gateway
+---
+apiVersion: security.istio.io/v1beta1
+kind: PeerAuthentication
+metadata:
+  name: defaultPeerAuthentication
+  namespace: default
+spec:
+  mtls:
+    mode: PERMISSIVE  # STRICT or DISABLE
 EOF
 ```
 
@@ -92,19 +113,6 @@ spec:
     hosts:
     - "*"
 EOF
-
-cat > PeerAuthentication.yaml<<EOF
-apiVersion: security.istio.io/v1beta1
-kind: PeerAuthentication
-metadata:
-  name: defaultPeerAuthentication
-  namespace: default
-spec:
-  mtls:
-    mode: STRICT  # or PERMISSIVE or DISABLE
-EOF
-
-kubectl apply -f PeerAuthentication.yaml
 ```
 
 Catch all egress for HTTP and HTTPS
