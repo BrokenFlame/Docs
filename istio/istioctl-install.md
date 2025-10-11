@@ -66,8 +66,8 @@ istioctl install --set profile=default  -f override.yaml
 ```
 
 
-
-Below is only to get metrics and service mapping to work in Kiali or to force egress via the egressgateway.
+# Advanced Egress Gateway Rules
+Below is only to get metrics and service mapping to work in Kiali or to force egress for common services via the egressgateway.
 
 ```sh
 cat > egress-gateway.yaml<<EOF
