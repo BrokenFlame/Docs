@@ -1,6 +1,7 @@
 Configure Istio Default Gateway to use NLB and allow egress
 
 ```sh
+cat > override.yaml<<EOF
 kind: Namespace
 metadata:
   labels:
@@ -13,7 +14,6 @@ metadata:
     kubernetes.io/metadata.name: istio-egress
   name: istio-egress
 ---
-cat > override.yaml<<EOF
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
