@@ -19,6 +19,7 @@ spec:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
           service.beta.kubernetes.io/aws-load-balancer-internal: "false"  # or "true" for internal
+          service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-xxxxxxxx"
         service:
           type: LoadBalancer
     egressGateways:
