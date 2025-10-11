@@ -41,6 +41,8 @@ spec:
       label:
         istio: egressgateway
   meshConfig:
+    accessLogFile: /dev/stdout
+    
     outboundTrafficPolicy:
       mode: ALLOW_ANY
     meshMTLS:
