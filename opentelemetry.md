@@ -71,6 +71,6 @@ spec:
           receivers: [filelog]
           processors: [k8sattributes, resource, batch]
           exporters: [datadog, loki]
-    ```
+```
 
 * Note annotation and lable detection is not automatic. You need to specify these as k8s.pod.labels.<label_name> for each entry you want to pick up.
