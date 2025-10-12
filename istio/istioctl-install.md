@@ -26,7 +26,7 @@ spec:
       namespace: istio-ingress
       enabled: true
       labels:
-        istio: ingressgateway
+        app: istio-ingressgateway
       k8s:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
@@ -51,7 +51,7 @@ spec:
       namespace: istio-egress
       enabled: true
       labels:
-        istio: egressgateway
+        app: istio-egressgateway
       overlays: # delete this overlay section if prometheus is not installed.
       - apiVersion: v1
         kind: Service
@@ -118,7 +118,7 @@ metadata:
   namespace: istio-egress
 spec:
   selector:
-    istio: egressgateway
+    app: istio-egressgateway
   servers:
   - port:
       number: 80
@@ -136,19 +136,21 @@ spec:
       mode: PASSTHROUGH
   - port:
       number: 22
-      name: ssh
-      protocol: TCP
+      name: tls-ssh
+      protocol: TLS
     hosts:
     - "*"
+    tls:
+      mode: PASSTHROUGH
   - port:
       number: 21
-      name: ftp
+      name: tcp-ftp
       protocol: TCP
     hosts:
     - "*"
   - port:
       number: 25
-      name: smtp
+      name: tcp-smtp
       protocol: TCP
     hosts:
     - "*"
@@ -170,10 +172,20 @@ spec:
   - number: 80
     name: http
     protocol: HTTP
+  - number: 21
+    name: tcp-ftp
+    protocol: TCP
+  - number: 22
+    name: tls-ftp
+    protocol: TLS
+  - number: 25
+    name: tcp-smtp
+    protocol: TCP
   - number: 443
     name: https
     protocol: TLS
   resolution: NONE
+
 ---
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
@@ -226,6 +238,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: DestinationRule
 metadata:
   name: egressgateway-for-external
+  namespace: istio-egress
 spec:
   host: istio-egressgateway.istio-egress.svc.cluster.local
   trafficPolicy:
