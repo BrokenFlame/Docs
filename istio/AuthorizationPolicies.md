@@ -2,7 +2,7 @@
 
 
 # Generic deny all.
-The following will prevent communication from other namespaces to the namespace specified
+The following will prevent communication from other namespaces to the namespace specified as well as in namespace communications.
 ```yaml
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy
