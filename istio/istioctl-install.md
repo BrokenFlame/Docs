@@ -25,7 +25,7 @@ spec:
     - name: istio-ingressgateway
       namespace: istio-ingress
       enabled: true
-      label:
+      labels:
         istio: ingressgateway
       k8s:
         serviceAnnotations:
@@ -35,7 +35,7 @@ spec:
         service:
           type: LoadBalancer
       # Expose Prometheus metrics
-      overlays:
+      overlays: # delete this overlay section if prometheus is not installed.
       - apiVersion: v1
         kind: Service
         name: istio-ingressgateway
@@ -47,15 +47,14 @@ spec:
             targetPort: 15090
             protocol: TCP
     egressGateways:
-    - name: istio-egressgatewaya
+    - name: istio-egressgateway
       namespace: istio-egress
       enabled: true
-      label:
+      labels:
         istio: egressgateway
   meshConfig:
-    enablePrometheusMerge: false  # Merge control-plane + sidecar metrics
+    enablePrometheusMerge: false  # Merge control-plane + sidecar metrics used for prometheus
     accessLogFile: /dev/stdout
-    
     outboundTrafficPolicy:
       mode: ALLOW_ANY
     meshMTLS:
@@ -64,6 +63,21 @@ spec:
     gateways:
       istio-ingressgateway:
         injectionTemplate: gateway
+    telemetry: # section can be deleted if prometheus is not installed
+      v2:
+        enabled: true
+        prometheus:
+          enabled: true
+          serviceMonitor:
+            enabled: true
+            interval: 15s   # frequency for scraping metrics
+  addonComponents:
+      prometheus:
+        enabled: false   # you will install Prometheus separately
+      kiali:
+        enabled: false    # optional; Kiali will need Prometheus access
+      grafana:
+        enabled: false
 ---
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
