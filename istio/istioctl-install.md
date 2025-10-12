@@ -52,6 +52,17 @@ spec:
       enabled: true
       labels:
         istio: egressgateway
+      overlays: # delete this overlay section if prometheus is not installed.
+      - apiVersion: v1
+        kind: Service
+        name: istio-egressgateway
+        patches:
+        - path: spec.ports.[name: http-envoy-prom]
+          value:
+            name: http-envoy-prom
+            port: 15090
+            targetPort: 15090
+            protocol: TCP
   meshConfig:
     enablePrometheusMerge: false  # Merge control-plane + sidecar metrics used for prometheus
     accessLogFile: /dev/stdout
