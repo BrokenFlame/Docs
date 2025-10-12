@@ -73,7 +73,7 @@ spec:
 ```
 
 Now you need a virtual service and a service to route the traffic correctly from the gateway:
-```
+```yaml
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
