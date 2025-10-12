@@ -192,5 +192,9 @@ spec:
     - myapp.mycompany.com
 ```
 
+Note, the easiest way to create the cookie secret is to use OpenSSL:
+```sh
+openssl rand -base64 32
+```
 
 
