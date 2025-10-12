@@ -34,6 +34,18 @@ spec:
           service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-xxxxxxxx"
         service:
           type: LoadBalancer
+      # Expose Prometheus metrics
+      overlays:
+      - apiVersion: v1
+        kind: Service
+        name: istio-ingressgateway
+        patches:
+        - path: spec.ports.[name: http-envoy-prom]
+          value:
+            name: http-envoy-prom
+            port: 15090
+            targetPort: 15090
+            protocol: TCP
     egressGateways:
     - name: istio-egressgatewaya
       namespace: istio-egress
@@ -41,6 +53,7 @@ spec:
       label:
         istio: egressgateway
   meshConfig:
+    enablePrometheusMerge: false  # Merge control-plane + sidecar metrics
     accessLogFile: /dev/stdout
     
     outboundTrafficPolicy:
