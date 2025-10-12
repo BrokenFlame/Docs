@@ -53,3 +53,4 @@ spec:
     - source:
         principals: ["cluster.local/ns/app-a/sa/app1-sa"]
 ```
+Remember if your app does not have a service account it Kubernetes always assigned the namespace's default service account.
