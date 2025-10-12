@@ -1,4 +1,4 @@
-Exporter configuration
+# Exporter configuration for Kubernetes Logs
 
 ```yaml
 receivers:
