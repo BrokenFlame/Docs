@@ -1,0 +1,59 @@
+EKS Standards:
+
+EKS IRSA has been chosen over Pod Identity as it provide fine grained idenity access management.
+```mermaid
+flowchart TD
+    %% =======================
+    %% AWS side
+    %% =======================
+    subgraph AWS
+        A1[/IAM Role: my-app-role/]
+        A2{"OIDC Provider: eks-cluster-oidc"}
+        A3["AWS Service (S3/DynamoDB)"]
+        A4((STS Service))
+    end
+
+    %% =======================
+    %% EKS Cluster
+    %% =======================
+    subgraph EKS
+        B1((Pod: my-app-pod))
+        B2[Kubernetes Service Account: my-app-sa]
+        B3((Node / kubelet))
+    end
+
+    %% =======================
+    %% Flows
+    %% =======================
+    %% Pod uses Service Account
+    B1 -->|mounts token| B2
+
+    %% Service Account annotated with IAM Role
+    B2 -->|annotated with IAM role| A2
+
+    %% Pod requests AWS API
+    B1 -->|request AWS API| A3
+
+    %% OIDC validation
+    A2 -->|validates JWT token| A4
+    A4 -->|issues temporary credentials| A1
+
+    %% Pod receives credentials
+    A1 -->|temporary credentials| B1
+    B1 -->|uses credentials| A3
+
+    %% Node involvement
+    B1 -->|token management| B3
+    B3 -->|refreshes credentials periodically| A4
+
+    %% Credential refresh loop
+    B1 -.->|auto-refresh before expiry| A4
+
+```
+
+## How it works (step-by-step)
+1. Service Account (my-app-sa) is annotated with the IAM role ARN (my-app-role).
+2. EKS OIDC provider validates the JWT token presented by the pod.
+3. If the token is valid, AWS STS issues temporary credentials for the IAM role.
+4. The pod uses these credentials to call AWS services like S3 or DynamoDB.
+5. Credentials expire automatically, and the pod refreshes them as needed.
