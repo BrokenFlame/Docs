@@ -1,0 +1,16 @@
+REGION="eu-west-2"
+
+# Print CSV header
+echo "Name,ARN,Endpoint"
+
+# List all Lambda functions in the region
+aws lambda list-functions --region "$REGION" --query "Functions[].FunctionArn" --output text | tr '\t' '\n' | while read LAMBDA_ARN; do
+    # Extract function name from ARN (last part after colon)
+    NAME=$(echo "$LAMBDA_ARN" | awk -F: '{print $NF}')
+    ARN="$LAMBDA_ARN"
+
+    # Endpoint: For Lambda, we can use the ARN itself; if the function has a URL (Lambda Function URL), we can fetch it
+    FUNCTION_URL=$(aws lambda get-function-url-config --function-name "$NAME" --region "$REGION" --query "FunctionUrl" --output text 2>/dev/null || echo "N/A")
+
+    echo "\"$NAME\",\"$ARN\",\"$FUNCTION_URL\""
+done
