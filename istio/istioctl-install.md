@@ -1,5 +1,8 @@
 # Configure Istio Default Gateway to use NLB and allow egress
 
+Note: Commend out overlay sections to prevent Prometheus scape points from creating.
+Remember to update security group ID before applying base Istio configuration.
+
 ```sh
 cat > namespaces.yaml<<EOF
 kind: Namespace
