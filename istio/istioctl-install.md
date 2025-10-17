@@ -1,7 +1,7 @@
-Configure Istio Default Gateway to use NLB and allow egress
+# Configure Istio Default Gateway to use NLB and allow egress
 
 ```sh
-cat > override.yaml<<EOF
+cat > namespaces.yaml<<EOF
 kind: Namespace
 metadata:
   labels:
@@ -13,7 +13,14 @@ metadata:
   labels:
     kubernetes.io/metadata.name: istio-egress
   name: istio-egress
----
+EOF
+
+kubectl apply -f namespaces.yaml
+```
+
+
+```sh
+cat > override.yaml<<EOF
 apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
@@ -89,7 +96,15 @@ spec:
         enabled: false    # optional; Kiali will need Prometheus access
       grafana:
         enabled: false
----
+EOF
+```
+
+```sh
+istioctl install --set profile=default  -f override.yaml
+```
+
+```sh
+cat > peerAuth.yaml<<EOF
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
@@ -99,12 +114,9 @@ spec:
   mtls:
     mode: PERMISSIVE  # STRICT or DISABLE
 EOF
-```
 
-```sh
-istioctl install --set profile=default  -f override.yaml
+kubectl apply -f peerAuth.yaml
 ```
-
 
 # Advanced Egress Gateway Rules
 Below is only to get metrics and service mapping to work in Kiali or to force egress for common services via the egressgateway.
