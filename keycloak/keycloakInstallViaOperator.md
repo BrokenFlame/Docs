@@ -48,13 +48,13 @@ Allow the infinispace failure detection port
 apiVersion: security.istio.io/v1beta1
 kind: PeerAuthentication
 metadata:
-  name: infinispan-allow-nomtls
+  name: infinispan-allow-nomtls-offset
 spec:
   selector:
     matchLabels:
       app: keycloak 
   portLevelMtls:
-    "7800": 
+    "57800": 
       mode: PERMISSIVE
 ```
 
