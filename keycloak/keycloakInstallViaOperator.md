@@ -100,6 +100,9 @@ spec:
     # tlsSecret: my-tls-secret
     labels: {}
     annotations: {}
+  proxy: edge
+  proxy:
+    headers: forwarded
   hostname:
     hostname: https://my-hostname.tld
     admin: https://my-hostname.tld/admin
@@ -127,6 +130,12 @@ spec:
     enabled: false                            # default 'false'
   serviceMonitor:
     enabled: false
+  additionalOptions:
+    - name: log-level
+      value: INFO
+    - name: quarkus.http.proxy.proxy-address-forwarding
+      value: "true"
+
 ```
 
 Create Keycloak Realm
