@@ -128,3 +128,18 @@ spec:
   serviceMonitor:
     enabled: false
 ```
+
+Create Keycloak Realm
+```yaml
+apiVersion: keycloak.org/v1alpha1
+kind: KeycloakRealm
+metadata:
+  name: kc-general-realm
+spec:
+  realm:
+    id: general
+    realm: general
+    displayName: General
+    enabled: true
+  keycloakCRName: my-keycloak
+```
