@@ -140,8 +140,8 @@ spec:
 
 Create Keycloak Realm
 ```yaml
-apiVersion: keycloak.org/v1alpha1
-kind: KeycloakRealm
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
 metadata:
   name: kc-general-realm
 spec:
