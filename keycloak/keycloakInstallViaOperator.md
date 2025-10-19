@@ -150,7 +150,7 @@ spec:
     realm: general
     displayName: General
     enabled: true
-  keycloakCRName: my-keycloak
+  keycloakCRName: keycloak
 ```
 
 
