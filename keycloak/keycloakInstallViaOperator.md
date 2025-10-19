@@ -77,7 +77,7 @@ kind: Keycloak
 metadata:
   name: keycloak
 spec:
-  instances: 2   # Number of Keycloak pods / replicas
+  instances: 3   # Number of Keycloak pods / replicas
   db:
     vendor: postgres
     usernameSecret:
@@ -87,7 +87,7 @@ spec:
       name: kc-db-creds
       key: password
     host: host
-    database: database
+    database: keycloak
     port: 5432
     schema: public # default schema
     poolInitialSize: 10
@@ -105,15 +105,15 @@ spec:
     headers: forwarded
   hostname:
     hostname: https://my-hostname.tld
-    admin: https://my-hostname.tld/admin
+    admin: https://my-hostname.tld
     strict: true # Force the use of correct hostnames (should be true in production)
     backchannelDynamic: false
   features:
     enabled:
       - authorization
       - admin
-    disabled:
       - docker
+    disabled:
       - step-up-authentication
   transaction:
     xaEnabled: false
@@ -124,7 +124,7 @@ spec:
     periodSeconds: 20
     failureThreshold: 5
   startupProbe:
-    periodSeconds: 20
+    periodSeconds: 45
     failureThreshold: 5
   tracing:
     enabled: false                            # default 'false'
