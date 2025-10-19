@@ -143,3 +143,34 @@ spec:
     enabled: true
   keycloakCRName: my-keycloak
 ```
+
+
+# Ingress
+The official Keycloak operator using ClusterIP for services. In AWS means creating an Ingress manually via istio or ALB controller:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-ingress
+  namespace: keycloak
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:region:account:certificate/your-certificate-id
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+  - host: keycloak.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: keycloak-service    # The service created by operator
+            port:
+              number: 8080            # Service port exposed by Keycloak
+```
