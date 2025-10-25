@@ -39,9 +39,15 @@ spec:
         app: istio-ingressgateway
       k8s:
         serviceAnnotations:
+          service.beta.kubernetes.io/aws-load-balancer-name: {RAND}-istio-ingress
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
           service.beta.kubernetes.io/aws-load-balancer-internal: "false"  # or "true" for internal
           service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-xxxxxxxx"
+          service.beta.kubernetes.io/aws-load-balancer-backend-security-groups: "sg-xxxxxxxx"
+          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+          # only use aws-load-balancer-subnet annotation if your subnets are not tagged correctly for the aws-alb-controller.
+          # or the aws-alb-controller cannot identify the correct subnet to places the nlb in.
+          # service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-xxxxxxx,subnet-xxxxxxx,subnet-xxxxxxx" 
         service:
           type: LoadBalancer
       # Expose Prometheus metrics
