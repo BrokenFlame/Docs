@@ -5,12 +5,14 @@ Remember to update security group ID before applying base Istio configuration.
 
 ```sh
 cat > namespaces.yaml<<EOF
+apiVersion: v1
 kind: Namespace
 metadata:
   labels:
     kubernetes.io/metadata.name: istio-ingress
   name: istio-ingress
 ---
+apiVersion: v1
 kind: Namespace
 metadata:
   labels:
