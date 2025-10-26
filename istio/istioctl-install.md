@@ -94,6 +94,10 @@ spec:
   values:
     global:
       variant: distroless
+      proxy:
+        logLevel: info
+      logging:
+        level: info
     gateways:
       istio-ingressgateway:
         injectionTemplate: gateway
