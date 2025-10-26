@@ -31,8 +31,6 @@ kind: IstioOperator
 metadata:
   name: istio-control-plane
 spec:
-  global:
-    variant: distroless
   profile: default
   components:
     ingressGateways:
@@ -94,6 +92,8 @@ spec:
     meshMTLS:
       minProtocolVersion: TLSV1_3
   values:
+    global:
+      variant: distroless
     gateways:
       istio-ingressgateway:
         injectionTemplate: gateway
