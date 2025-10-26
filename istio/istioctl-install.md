@@ -31,6 +31,8 @@ kind: IstioOperator
 metadata:
   name: istio-control-plane
 spec:
+  global:
+    variant: distroless
   profile: default
   components:
     ingressGateways:
