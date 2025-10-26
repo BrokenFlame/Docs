@@ -87,6 +87,7 @@ spec:
       forwardClientCertDetails: APPEND_FORWARD # Options are "APPEND_FORWARD", "FORWARD_ONLY", "ALWAYS_FORWARD_ONLY", "SANITIZE", "SANITIZE_SET", "UNDEFINED".
     enablePrometheusMerge: false  # Merge control-plane + sidecar metrics used for prometheus
     accessLogFile: /dev/stdout
+    accessLogEncoding: JSON # TEXT OR JSON
     outboundTrafficPolicy:
       mode: ALLOW_ANY
     meshMTLS:
