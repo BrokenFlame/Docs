@@ -28,13 +28,13 @@ spec:
         # TLS 1.2 ciphers (RSA)
         - ECDHE-RSA-AES128-GCM-SHA256
         - ECDHE-RSA-AES256-GCM-SHA384
-       # TLS 1.2 EC certificates
-         - ECDHE-ECDSA-AES128-GCM-SHA256
+        # TLS 1.2 EC certificates
+        - ECDHE-ECDSA-AES128-GCM-SHA256
         - ECDHE-ECDSA-AES256-GCM-SHA384
         - ECDHE-RSA-AES128-GCM-SHA256
         - ECDHE-RSA-AES256-GCM-SHA384
     hosts:
-    - nginx.example.com
+    - myapp.example.com
 EOF
 ```
 
