@@ -82,6 +82,9 @@ spec:
             targetPort: 15090
             protocol: TCP
   meshConfig:
+    gatewayTopology:
+      numTrustedProxies: 2
+      forwardClientCertDetails: APPEND_FORWARD # Options are "APPEND_FORWARD", "FORWARD_ONLY", "ALWAYS_FORWARD_ONLY", "SANITIZE", "SANITIZE_SET", "UNDEFINED".
     enablePrometheusMerge: false  # Merge control-plane + sidecar metrics used for prometheus
     accessLogFile: /dev/stdout
     outboundTrafficPolicy:
