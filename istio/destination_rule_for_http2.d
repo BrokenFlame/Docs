@@ -1,4 +1,4 @@
-
+# Destination Rule to push HTTP2 from sidecar to application container
 
 ```yaml
 apiVersion: networking.istio.io/v1beta1
@@ -21,5 +21,4 @@ spec:
       maxEjectionPercent: 50
     # Idle timeout closes idle connections to free resources and improve LB efficiency
     idleTimeout: 30s
-
   ```
