@@ -40,6 +40,9 @@ spec:
       labels:
         app: istio-ingressgateway
       k8s:
+        hpaSpec:
+          maxReplicas: 21
+          minReplicas: 3
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-name: {RAND}-istio-ingress
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
