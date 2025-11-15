@@ -47,9 +47,10 @@ spec:
         serviceAnnotations:
           service.beta.kubernetes.io/aws-load-balancer-name: {RAND}-istio-ingress
           service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
-          service.beta.kubernetes.io/aws-load-balancer-internal: "false"  # or "true" for internal
+          service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"  # or "internal" 
           service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-xxxxxxxx"
           service.beta.kubernetes.io/aws-load-balancer-backend-security-groups: "sg-xxxxxxxx"
+          service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
           service.beta.kubernetes.io/aws-load-balancer-attributes: >
             access_logs.s3.enabled=true,
             access_logs.s3.bucket=my-access-log-bucket,
