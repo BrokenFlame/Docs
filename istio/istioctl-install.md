@@ -23,6 +23,20 @@ EOF
 kubectl apply -f namespaces.yaml
 ```
 
+```sh
+cat > istio-ingress-priority.yaml<<EOF
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: istio-ingress-priority
+value: 1000000
+globalDefault: false
+description: "High priority class for Istio ingressgateway pods"
+
+EOF
+
+kubectl apply -f istio-ingress-priority.yaml
+```
 
 ```sh
 cat > override.yaml<<EOF
