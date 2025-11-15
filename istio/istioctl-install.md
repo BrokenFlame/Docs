@@ -40,6 +40,9 @@ spec:
       labels:
         app: istio-ingressgateway
       k8s:
+       podTemplate:
+            spec:
+              priorityClassName: istio-ingress-priority
         daemonSet: false # do not use with hpaSpec  
         hpaSpec: # not required for EKS
           maxReplicas: 21
