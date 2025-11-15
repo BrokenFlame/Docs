@@ -40,7 +40,8 @@ spec:
       labels:
         app: istio-ingressgateway
       k8s:
-        hpaSpec:
+        daemonSet: false # do not use with hpaSpec  
+        hpaSpec: # not required for EKS
           maxReplicas: 21
           minReplicas: 3
         serviceAnnotations:
@@ -54,7 +55,7 @@ spec:
           # or the aws-alb-controller cannot identify the correct subnet to places the nlb in.
           # service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-xxxxxxx,subnet-xxxxxxx,subnet-xxxxxxx" 
         service:
-          type: LoadBalancer
+          type: LoadBalancer # Node port for local setups
       # Expose Prometheus metrics
       overlays: # delete this overlay section if prometheus is not installed.
       - apiVersion: v1
