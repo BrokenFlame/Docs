@@ -50,10 +50,18 @@ spec:
           service.beta.kubernetes.io/aws-load-balancer-internal: "false"  # or "true" for internal
           service.beta.kubernetes.io/aws-load-balancer-security-groups: "sg-xxxxxxxx"
           service.beta.kubernetes.io/aws-load-balancer-backend-security-groups: "sg-xxxxxxxx"
-          service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
+          service.beta.kubernetes.io/aws-load-balancer-attributes: >
+            access_logs.s3.enabled=true,
+            access_logs.s3.bucket=my-access-log-bucket,
+            access_logs.s3.prefix=my-app,
+            deletion_protection.enabled=false,
+            load_balancing.cross_zone.enabled=true
           # only use aws-load-balancer-subnet annotation if your subnets are not tagged correctly for the aws-alb-controller.
           # or the aws-alb-controller cannot identify the correct subnet to places the nlb in.
-          # service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-xxxxxxx,subnet-xxxxxxx,subnet-xxxxxxx" 
+          # service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-xxxxxxx,subnet-xxxxxxx,subnet-xxxxxxx"
+          service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: >
+            Environment=dev,
+            Team=test 
         service:
           type: LoadBalancer # Node port for local setups
           externalTrafficPolicy: Local # Local to preserver source IP, options are "Local" or "Cluster"
