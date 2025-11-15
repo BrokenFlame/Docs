@@ -56,6 +56,7 @@ spec:
           # service.beta.kubernetes.io/aws-load-balancer-subnets: "subnet-xxxxxxx,subnet-xxxxxxx,subnet-xxxxxxx" 
         service:
           type: LoadBalancer # Node port for local setups
+          externalTrafficPolicy: Local # Local to preserver source IP, options are "Local" or "Cluster"
       # Expose Prometheus metrics
       overlays: # delete this overlay section if prometheus is not installed.
       - apiVersion: v1
