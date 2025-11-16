@@ -10,6 +10,8 @@ spec:
   url: "ghcr.io/corazawaf/coraza-proxy-wasm:0.6.0"
   imagePullPolicy: IfNotPresent
   phase: AUTHN
+  priority: 1000
+  failStrategy: FAIL_OPEN # Options are FAIL_RELOAD | FAIL_OPEN | FAIL_CLOSE
   pluginConfig:
     default_directives: "default"
     directives_map:
