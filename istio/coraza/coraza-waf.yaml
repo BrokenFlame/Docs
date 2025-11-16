@@ -7,7 +7,7 @@ spec:
   selector:
     matchLabels:
       istio: ingressgateway
-  url: "oci://ghcr.io/corazawaf/coraza-proxy-wasm:v1.0.0"
+  url: "ghcr.io/corazawaf/coraza-proxy-wasm:0.6.0"
   imagePullPolicy: IfNotPresent
   phase: AUTHN
   pluginConfig:
