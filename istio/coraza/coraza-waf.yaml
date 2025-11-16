@@ -14,8 +14,17 @@ spec:
     default_directives: "default"
     directives_map:
       default:
-        - "Include @recommended-conf"
+        # Enable Coraza rules
         - "SecRuleEngine On"
-        - "SecDebugLogLevel 0"
+        # Exclude /health path from scanning
+        - 'SecRule REQUEST_URI "@beginsWith /health" "id:1000,phase:1,pass,nolog,ctl:ruleEngine=Off"'
+        # Recommended default rules
+        - "Include @recommended-conf"
         - "Include @crs-setup-conf"
         - "Include @owasp_crs/*.conf"
+        # Enable audit logs to stdout (Kubernetes will capture them)
+        - "SecAuditEngine RelevantOnly"
+        - "SecAuditLogType Serial"
+        - "SecAuditLog /dev/stdout"
+        # Optional: debug level 0 (production)
+        - "SecDebugLogLevel 0"
