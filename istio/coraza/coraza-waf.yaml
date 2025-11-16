@@ -15,16 +15,19 @@ spec:
   pluginConfig:
     # This is the correct format for v0.6.0
     rules: |
-      SecDebugLogLevel 4
+      SecDebugLogLevel 1
       SecAuditLog /dev/stdout
+      SecAuditEngine Off
       SecAuditLogParts ABCFHZ
       SecAuditLogFormat JSON
-      SecRuleEngine On
       Include @crs-setup-conf
       Include @owasp_crs/*.conf
 
       # Rule 1 (ID 101)
-      # curl -I -v "https://my-application/?testblock=true"
-      SecRule ARGS:testblock "@eq true" "id:1001,phase:2,deny,status:403,msg:'WAF TEST BLOCK'"
+      SecRule ARGS:testblock "@eq true" "id:101,phase:2,deny,status:403,msg:'WAF TEST BLOCK'"
 
-      SecRule REQUEST_URI "@beginsWith /health" "id:1000,phase:1,pass,nolog,ctl:ruleEngine=Off"'
+      # *** NEW RULE TO ENABLE LOGGING ONLY ON BLOCK ***
+      # In the logging phase (5), this rule checks if the request was blocked.
+      # If TX.INTERVENTION is "1" (meaning blocked), it turns the audit engine ON
+      # just for this single transaction. Formatting will revert back to basic text
+      SecRule TX:INTERVENTION "@eq 1" "id:999,phase:5,pass,nolog,ctl:auditEngine=On"
