@@ -16,6 +16,15 @@ spec:
       istio: ingressgateway
 ```
 
+# Check your websites still work
+Run curl commands such as and ensure you get expected responses using in the 200 range.
+```sh
+curl -I https://your-domain/
+curl -I https://your-domain/health
+curl -I https://your-domain/api/products
+
+```
+
 # Run the test script
 Download the testscript and name is something appropriate.  Note that this script is only designed to work in Bash.
 
