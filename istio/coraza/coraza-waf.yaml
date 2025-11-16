@@ -9,17 +9,31 @@ spec:
       istio: ingressgateway
   url: "ghcr.io/corazawaf/coraza-proxy-wasm:0.6.0"
   imagePullPolicy: IfNotPresent
-  phase: AUTHN
+  phase: AUTHZ
   priority: 1000
   failStrategy: FAIL_CLOSE # Options are FAIL_RELOAD | FAIL_OPEN | FAIL_CLOSE
   pluginConfig:
+    requestBodyAccess: true
+    processInvalidRequests: true
     # This is the correct format for v0.6.0
     rules: |
       SecDebugLogLevel 1
+      SecAuditEngine RelevantOnly
       SecAuditLog /dev/stdout
       SecAuditEngine Off
       SecAuditLogParts ABCFHZ
       SecAuditLogFormat JSON
+
+      # SecRequestBodyAccess On
+      # SecRequestBodyLimit 13107200          # 12.5 MB
+      # SecRequestBodyInMemoryLimit 131072    # 128 KB
+      # SecRequestBodyNoFilesLimit 13107200
+      # SecRequestBodyLimitAction ProcessPartial
+
+      # SecResponseBodyAccess On
+      # SecResponseBodyLimit 5242880          # 5 MB
+      # SecResponseBodyInMemoryLimit 524288
+
       Include @crs-setup-conf
       Include @owasp_crs/*.conf
 
