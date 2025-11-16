@@ -26,5 +26,6 @@ spec:
         - "SecAuditEngine RelevantOnly"
         - "SecAuditLogType Serial"
         - "SecAuditLog /dev/stdout"
+        - "SecAuditLogFormat JSON"
         # Optional: debug level 0 (production)
         - "SecDebugLogLevel 0"
