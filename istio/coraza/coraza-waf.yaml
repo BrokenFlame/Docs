@@ -12,9 +12,6 @@ spec:
   phase: AUTHN
   priority: 1000
   failStrategy: FAIL_OPEN # Options are FAIL_RELOAD | FAIL_OPEN | FAIL_CLOSE
-  trafficSelector:
-    workload:
-      type: Server   # Server = inbound traffic, Client = outbound traffic
   pluginConfig:
     default_directives: "default"
     directives_map:
