@@ -40,6 +40,9 @@ spec:
       # Rule 1 (ID 101)
       SecRule ARGS:testblock "@eq true" "id:101,phase:2,deny,status:403,msg:'WAF TEST BLOCK'"
 
+      # Rule 1 (ID 200100)
+      SecRule ARGS "(?i)(http?|https?|ftp)://[^\s]+" "id:200100,phase:2,deny,status:403,msg:'RFI Detected'"
+
       # *** NEW RULE TO ENABLE LOGGING ONLY ON BLOCK ***
       # In the logging phase (5), this rule checks if the request was blocked.
       # If TX.INTERVENTION is "1" (meaning blocked), it turns the audit engine ON
