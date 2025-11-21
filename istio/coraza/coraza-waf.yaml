@@ -34,14 +34,52 @@ spec:
       # SecResponseBodyLimit 5242880          # 5 MB
       # SecResponseBodyInMemoryLimit 524288
 
-      Include @crs-setup-conf
-      Include @owasp_crs/*.conf
+      # Default includes ruleset. Use these with RFI detection
+      # Include @crs-setup-conf  
+      # Include @owasp_crs/*.conf
 
-      # Rule 1 (ID 101)
+      # Rule 1 Test rule (ID 101) /?testblock=true
       SecRule ARGS:testblock "@eq true" "id:101,phase:2,deny,status:403,msg:'WAF TEST BLOCK'"
 
-      # Rule 1 (ID 200100)
+      # --- 0. EXCLUDE HEALTH CHECKS ------------------------------------------------
+      # SecRule REQUEST_URI "^/health" "id:1000,phase:1,pass,nolog,ctl:ruleEngine=Off"
+      
+      # --- 1. CHEAP REJECTIONS -----------------------------------------------------
+      SecRule REQUEST_METHOD "^(TRACE|TRACK|OPTIONS)$" "id:1010,phase:1,deny,status:403,msg:'WAF: Block dangerous HTTP methods'"
+      SecRule REQUEST_URI "\.\./" "id:1020,phase:2,deny,status:403,msg:'WAF: Path traversal detected'"
+      SecRule REQUEST_URI "\.\.\\\\" "id:1030,phase:2,deny,status:403,msg:'WAF: Path traversal detected (Windows)'"
+      
+      # --- 2. LANGUAGE-SPECIFIC RULES ---------------------------------------------
+      
+      # PHP / Laravel
+      SecRule REQUEST_URI "\.env$" "id:2000,phase:2,deny,status:403,msg:'WAF: Block Laravel .env access'"
+      SecRule ARGS "(?i)(eval\(|assert\(|phpinfo\(|shell_exec|base64_decode)" "id:2010,phase:2,deny,status:403,msg:'WAF: PHP sensitive function'"
+      
+      # Java / Spring Boot
+      SecRule REQUEST_URI "^/actuator" "id:3000,phase:2,deny,status:403,msg:'WAF: Block Spring Boot actuator'"
+      SecRule ARGS "(?i)(\#\{.*\}|T\(java|Runtime\.getRuntime)" "id:3010,phase:2,deny,status:403,msg:'WAF: Java Expression Injection'"
+      
+      # Node.js
+      SecRule ARGS "(?i)(__proto__|constructor\.prototype)" "id:5000,phase:2,deny,status:403,msg:'WAF: Node.js prototype pollution'"
+      SecRule ARGS "(?i)(require\(|child_process|process\.mainModule)" "id:5010,phase:2,deny,status:403,msg:'WAF: Node.js RCE pattern'"
+      
+      # C# Minimal API
+      SecRule ARGS "(?i)(System\.IO|System\.Diagnostics|Process\.Start)" "id:4000,phase:2,deny,status:403,msg:'WAF: .NET sensitive namespace'"
+      
+      # --- 3. CORE WAF RULES (REGEX HEAVY) ----------------------------------------
+      SecRule ARGS "(?i)(union(\s+all)?\s+select|select.+from|insert\s+into|drop\s+table|update.+set|or\s+1=1|--|#|;)" "id:1100,phase:2,deny,status:403,msg:'WAF: SQL Injection'"
+      SecRule ARGS "(?i)(<script|onerror=|onload=|<img.+src=javascript:|javascript:)" "id:1200,phase:2,deny,status:403,msg:'WAF: XSS'"
+      SecRule ARGS "(?i)(;|&&|\|\|)\s*(wget|curl|bash|sh|powershell)" "id:1300,phase:2,deny,status:403,msg:'WAF: Command injection'"
       SecRule ARGS "(?i)(http?|https?|ftp)://[^\s]+" "id:200100,phase:2,deny,status:403,msg:'RFI Detected'"
+      
+      # --- 4. REQUEST SIZE ---------------------------------------------------------
+      #SecRule REQUEST_BODY_LENGTH "@gt 1048576" "id:1400,phase:2,deny,status:403,msg:'WAF: Request body too large'"
+      
+      # --- 5. HEADER SANITIZATION --------------------------------------------------
+      SecRule RESPONSE_HEADERS:Server ".*" "id:1500,phase:3,pass,t:none,ctl:responseBodyAccess=Off,unsetvar:RESPONSE_HEADERS:Server"
+      SecRule RESPONSE_HEADERS:X-Powered-By ".*" "id:1501,phase:3,pass,t:none,ctl:responseBodyAccess=Off,unsetvar:RESPONSE_HEADERS:X-Powered-By"
+      SecRule RESPONSE_HEADERS:X-AspNet-Version ".*" "id:1502,phase:3,pass,t:none,ctl:responseBodyAccess=Off,unsetvar:RESPONSE_HEADERS:X-AspNet-Version"
+      SecRule RESPONSE_HEADERS:X-AspNetMvc-Version ".*" "id:1503,phase:3,pass,t:none,ctl:responseBodyAccess=Off,unsetvar:RESPONSE_HEADERS:X-AspNetMvc-Version"
 
       # *** NEW RULE TO ENABLE LOGGING ONLY ON BLOCK ***
       # In the logging phase (5), this rule checks if the request was blocked.
