@@ -96,3 +96,8 @@ Decrypt RSA Private Key
 ```sh
 openssl rsa -in encrypted_PrivateKey.pem -out PrivateKey.pem
 ```
+
+Get Public Key for Private RSA Key
+```sh
+openssl rsa -in private_key.pem  -pubout
+```
