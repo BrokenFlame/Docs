@@ -101,3 +101,28 @@ Get Public Key for Private RSA Key
 ```sh
 openssl rsa -in private_key.pem  -pubout
 ```
+
+Get Public Key for Private EC Key
+```sh
+openssl ec -in private.pem -pubout -out public.pem
+```
+
+Generic get public key from private key
+```sh
+openssl pkey -in private.pem -pubout -out public.pem
+```
+
+Get Public Key from certificate
+```sh
+openssl x509 -in cert.pem -pubkey -noout > public_key.pem
+```
+
+
+Generate JWT Key ID truncated to 20 bytes. 
+***You will need the public key from the private key or certificate***
+```sh
+openssl pkey -pubin -in public_key.pem -outform DER \
+| openssl dgst -sha256 -binary \
+| head -c 20 \
+| base64 | tr '+/' '-_' | tr -d '='
+```
