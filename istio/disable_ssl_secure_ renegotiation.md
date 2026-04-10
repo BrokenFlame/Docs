@@ -29,3 +29,9 @@ spec:
                   # Disables client-initiated renegotiation
                   renegotiation_allowed: false
 ```
+
+## Test with
+
+```yaml
+openssl s_client -connect yourhost:443 -reconnect
+```
