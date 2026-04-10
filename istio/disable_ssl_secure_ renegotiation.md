@@ -30,8 +30,12 @@ spec:
                   renegotiation_allowed: false
 ```
 
-## Test with
-
+## Test
+Use the following command to check the configuration is correct.
 ```yaml
 openssl s_client -connect yourhost:443 -reconnect
+```
+To get specific use the -tls switch to check TLS1.2 and 1.3.
+```yaml
+openssl s_client -connect www.google.com:443 -tls1_2
 ```
