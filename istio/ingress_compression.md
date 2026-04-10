@@ -2,7 +2,7 @@
 
 Apply in the namespace of the ingress, also remeber to update the label selector.
 
-'''yaml
+```yaml
 apiVersion: networking.istio.io/v1alpha3
 kind: EnvoyFilter
 metadata:
@@ -42,7 +42,7 @@ spec:
               "@type": type.googleapis.com/envoy.extensions.compression.gzip.compressor.v3.Gzip
               memory_level: 9
               compression_level: BEST_COMPRESSION
-'''
+```
 
 Set the compression and memory as required:
 
