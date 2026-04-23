@@ -1,3 +1,5 @@
+
+```scsi.yaml
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -44,3 +46,10 @@ spec:
           image: gcr.io/google-containers/pause:3.1
       volumes:
         - name: host
+```
+
+Test with:
+```sh
+kubectl debug <nodename> -it --image=amazonlinux:2023 --profile=general -- chroot /host bash
+systemctl status iscsid
+```
