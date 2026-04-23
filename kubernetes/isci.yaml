@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: iscsi-and-nfsutil
+spec:
+  selector:
+    matchLabels:
+      app: iscsi-and-nfsutil
+  template:
+    metadata:
+      labels:
+        app: iscsi-and-nfsutil
+    spec:
+      hostPID: true
+      hostNetwork: true
+      hostIPC: true
+      initContainers:
+        - name: node-preparer
+          image: amazonlinux:2023
+          securityContext:
+            privileged: true
+          command:
+            - /bin/bash
+            - -c
+            - |
+              chroot /host /bin/bash -c "
+              # Install iSCSI
+              dnf install -y iscsi-initiator-utils
+              systemctl enable iscsid
+              systemctl start iscsid
+
+              # Install NFS client
+              dnf install -y nfs-utils
+              systemctl enable nfs-client.target
+              systemctl start nfs-client.target
+
+              echo 'Node preparation complete'
+              "
+          volumeMounts:
+            - name: host
+              mountPath: /host
+      containers:
+        - name: pause
+          image: gcr.io/google-containers/pause:3.1
+      volumes:
+        - name: host
