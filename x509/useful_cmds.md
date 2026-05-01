@@ -126,3 +126,15 @@ openssl pkey -pubin -in public_key.pem -outform DER \
 | head -c 20 \
 | base64 | tr '+/' '-_' | tr -d '='
 ```
+
+Validate Private Key against Certificate
+```sh
+diff <(openssl x509 -in certificate.crt -pubkey -noout) <(openssl pkey -in private.key -pubout)
+```
+
+Validate Private Key against Certificate (RSA only)
+```sh
+## Check Hashes Match
+openssl x509 -noout -modulus -in certificate.crt | openssl md5; \
+openssl rsa  -noout -modulus -in private.key    | openssl md5
+```
