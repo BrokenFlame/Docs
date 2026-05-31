@@ -132,12 +132,23 @@ def run_diarisation(audio_path: Path, hf_token: str) -> list:
     diarisation = pipeline(str(audio_path))
 
     segments = []
-    for turn, _, speaker in diarisation.itertracks(yield_label=True):
-        segments.append({
-            "speaker": speaker,
-            "start":   round(turn.start, 3),
-            "end":     round(turn.end,   3),
-        })
+    # Support both pyannote 2.x (Annotation) and 3.x (DiarizationOutput)
+    try:
+        # pyannote 2.x / Annotation object
+        for turn, _, speaker in diarisation.itertracks(yield_label=True):
+            segments.append({
+                "speaker": speaker,
+                "start":   round(turn.start, 3),
+                "end":     round(turn.end,   3),
+            })
+    except AttributeError:
+        # pyannote 3.x — iterate directly
+        for segment in diarisation:
+            segments.append({
+                "speaker": segment.speaker,
+                "start":   round(segment.start, 3),
+                "end":     round(segment.end,   3),
+            })
 
     segments.sort(key=lambda s: s["start"])
     print(f"[info] Found {len(segments)} speaker segments across "
