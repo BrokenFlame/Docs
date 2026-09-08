@@ -26,3 +26,8 @@ for instance in $(aws ec2 describe-instances \
   done
 done
 ```
+
+Audit RDS Instance KMS data at rest encryption keys
+```sh
+aws rds describe-db-instances   --region eu-west-1   --query 'DBInstances[*].[DBInstanceIdentifier,Engine,EngineVersion,DBInstanceClass,StorageEncrypted,KmsKeyId]'   --output table
+```
