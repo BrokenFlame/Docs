@@ -109,3 +109,69 @@ spec:
 {{- end }}
 {{- end }}
 ```
+
+Default values file
+```yaml
+# -- KEDA (Kubernetes Event-Driven Autoscaling) configuration, over rides HPA settings if enabled
+keda:
+   # -- Enable KEDA (true/false)
+  enabled: false
+  # -- KEDA trigger authentication configuration
+triggerAuthentication:
+  # -- The ARN of the role to be used for KEDA trigger authentication
+  roleArn: null
+  # -- The name of the KEDA trigger authentication resource
+scaledObjects: {}
+```
+Add required Scaled Object
+```
+keda:
+  enabled: true
+triggerAuthentication: 
+  roleArn: <ARN of the triggerAuthentication>
+scaledObjects: 
+  scaleTargetRef:
+    name: <pod/replica name>
+  minReplicaCount: 2
+  maxReplicaCount: 9
+  pollingInterval: 30  # Optional: polling interval in seconds
+  cooldownPeriod: 120  # Optional: cooldown period in seconds
+  advanced:
+    restoreToOriginalReplicaCount: true
+    horizontalPodAutoscalerConfig:
+      behavior:
+        scaleUp:
+          stabilizationWindowSeconds: 60
+          selectPolicy: Max
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 90
+        scaleDown:
+          stabilizationWindowSeconds: 300
+          selectPolicy: Min
+          policies:
+          - type: Pods
+            value: 2
+            periodSeconds: 120
+  fallback:
+    failureThreshold: 3
+    replicas: 2
+  triggers:
+  - type: aws-sqs-queue
+    authenticationRef: true
+    metadata:
+      activationQueueLength: 0
+      queueURL: "https://sqs.eu-west-2.amazonaws.com/<aws account number>/<queue name>"
+      queueLength: 10  # Optional: the number of messages in the queue to trigger scaling
+      awsRegion: <AWS region code>
+      scaleOnInFlight: false
+  - type: cpu
+    metricType: Utilization
+    metadata:
+      value: "80"
+  - type: memory
+    metricType: Utilization
+    metadata:
+      value: "80"
+```
